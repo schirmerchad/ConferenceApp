@@ -39,9 +39,9 @@ The method that adds or deletes a Session was modeled after the Conference metho
 <b>Task 3: Indexes and Queries</b>
 To fulfill Task #3, the autogeneration funcationality of index.yaml was tested and then two additional query endpoints were designed and implemeneted. The two additional queries and their endpoints are described below:
 <ul>lessThanFiveSeats(): Returns a list of all the Conferences that only have 4 or less seats remaining</ul>
-<ul>confWithWorkshop(startTime,typeOfSession): Returns all conferences that have at least one workshop</ul>
+<ul>confWithWorkshop(): Returns all conferences that have at least one workshop</ul>
 
-The second part of Task #3 asks for a written answer to a specific query problem. The problem with the requested query is that, according to the Datastore Python Queries documentation "inequality filters are limited to at most one property." The proposed query has two inequality operators. To solve this issue one would ned to query all sessions that are not Workshops and then iterate over the query results to filter out Sessions after 7pm. 
+The second part of Task #3 asks for a written answer to a specific query problem. The problem with the requested query is that, according to the Datastore Python Queries documentation "inequality filters are limited to at most one property." The proposed query has two inequality operators. To solve this issue one would need to query all sessions that are not Workshops and then iterate over the query results to filter out Sessions after 7pm. 
 
 <b>Task 4: Add a Task</b>
 To fulfill Task #4, a method was written to determine if a Speaker is speaking at more than one conference and if that is true, add a Memcache entry that features the Speaker's name. Everytime a Session is created the code checks whether or not the Session Speaker should be added as the newest featured Speaker.
