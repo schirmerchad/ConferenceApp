@@ -30,40 +30,27 @@ The supporting methods are defined in conferences.py. They are described briefly
 <ul>createSession(SessionForm, websafeConferenceKey): Creates a session and relates it to the parent Conference</ul>
 
 <b>Task 2: Add Sessions to User's Wishlist</b>
-To fulfill Task #2, two methods were designed that allow a logged in user to add or delete Sessions from a wishlist and view that wishlist. A new property, sessionWishList had to be added to the Profile class to accomodate the new functionality.
-The method that adds or deletes a Session was modeled after the Conference method that registers or unregisters a user for a conference. It simply checks that the User and Session exists and appends or removes the Session from that User's wishlist. The two methods are briefly explained below:
-<ul>addSessionToWishlist(SessionKey): add/delete the Session from the User's list of Sessions</ul>
-<ul>getSessionsInWishlist(): query for all the Sessions in a User's wishlist</ul>
+To fulfill Task #2, multiple methods were designed that allow a logged in user to add or delete Sessions from a wishlist and view that wishlist. A new property, sessionWishList had to be added to the Profile class to accomodate the new functionality.
+The method that adds or deletes a Session was modeled after the Conference method that registers or unregisters a user for a conference. It simply checks that the User and Session exists and appends or removes the Session from that User's wishlist. The methods are briefly explained below:
+<ul>addToWishlist(): Add the Session from the User's list of Sessions</ul>
+<ul>deleteFromWishlist(): Delete the Session from the User's list of Sessions</ul>
+<ul>getSessionsInWishlist(): Query for all the Sessions in a User's wishlist</ul>
 
 <b>Task 3: Indexes and Queries</b>
 To fulfill Task #3, the autogeneration funcationality of index.yaml was tested and then two additional query endpoints were designed and implemeneted. The two additional queries and their endpoints are described below:
-<ul>getAllSpeakers()
-Returns a list of all the Speakers for all Conferences and Sessions
-sessionsByTimeAndType(startTime,typeOfSession)
-Returns all Sessions that begin before the time specified by startTime (represented in 24 hour format as HH:MM) and constrained to MATCH the type of Session as specified by the typeOfSession parameter.
-4.2 The 2nd part of the requirement posed a specific query-related problem to solve along with a description of how the solution was derived. The problem itself is as follows:
+<ul>lessThanFiveSeats(): Returns a list of all the Conferences that only have 4 or less seats remaining</ul>
+<ul>confWithWorkshop(startTime,typeOfSession): Returns all conferences that have at least one workshop</ul>
 
-Let’s say that you don't like workshops and you don't like sessions after 7 pm. How would you handle a query for all non-workshop sessions before 7 pm?
-What is the problem for implementing this query?
-What ways to solve it did you think of?
-The main problem in implementing this query is that Datastore will not allow you to do a query with two different inequality operators in the query. For this problem, the query would require that typeOfSession does NOT equal 'workshop' and startTime is less than 19:00:00. Datastore will not allow that sort of query.
+The second part of Task #3 asks for a written answer to a specific query problem. The problem with the requested query is that, according to the Datastore Python Queries documentation "inequality filters are limited to at most one property." The proposed query has two inequality operators. To solve this issue one would ned to query all sessions that are not Workshops and then iterate over the query results to filter out Sessions after 7pm. 
 
-To solve this, you could either query for all sessions that do NOT match the session type and then iterate over the results in Python and test the session startTime against the request startTime OR the exact opposite.
-
-I chose to implement it the "first" way described above as I believe that filtering by session type may produce FEWER results than starting out with all the sessions before a given time and then iterating from there.
-
-Requirement #5 specifies that a Featured Speaker capability is to be added to the system. Specifically, some sort of logic is to be created to identify the criteria for a Speaker to be the Featured Speaker and then appropriate code must be written to implement that logic using App Engine's Task Queue capability.
-SetFeaturedSpeakerHandler()
-Method to determine if there are any featured speakers in the system and if so, set up a MemCache key to hold the list of those speakrers.
-Defined in main.py.
-getFeaturedSpeaker()
-Method to retrieve the list of Featured Speakers that is stored in MemCache so it can be displayed. Defined inconference.py.
-Called any time a change of Speakers or Sessions is made.
+<b>Task 4: Add a Task</b>
+To fulfill Task #4, a method was written to determine if a Speaker is speaking at more than one conference and if that is true, add a Memcache entry that features the Speaker's name. Everytime a Session is created the code checks whether or not the Session Speaker should be added as the newest featured Speaker.
+First, an endpoint method was implemented:
+<ul>getFeaturedSpeaker(): Returns the featured speaker and stores it in the Memcache</ul>
+Second, a handler for Memcache and task queue was created in main.py:
+<ul>AddFeaturedSpeakerHandler()</ul>
 
 <h1>Documentation</h1>
-<ul>Python v2.7.6</ul>
-<ul>oauth2client</ul>
-<ul>Flask v0.10.1 and all Flask dependencies</ul>
-<ul>SQLite 3</ul>
-<ul>SQLalchemy v1.0</ul>
-<ul>Boostrap 3</ul>
+<ul>https://cloud.google.com/appengine/docs/python/</ul>
+<ul>https://cloud.google.com/appengine/downloads#Google_App_Engine_SDK_for_Python</ul>
+<ul>https://cloud.google.com/appengine/docs/python/datastore/queries?hl=en#Python_Restrictions_on_queries</ul>
