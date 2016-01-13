@@ -33,7 +33,7 @@ The supporting methods are defined in conferences.py. They are described briefly
 To fulfill Task #2, two methods were designed that allow a logged in user to add or delete Sessions from a wishlist and view that wishlist. A new property, sessionWishList had to be added to the Profile class to accomodate the new functionality.
 The method that adds or deletes a Session was modeled after the Conference method that registers or unregisters a user for a conference. It simply checks that the User and Session exists and appends or removes the Session from that User's wishlist. The two methods are briefly explained below:
 <ul>addSessionToWishlist(SessionKey): add/delete the Session from the User's list of Sessions</ul>
-<ul>getSessionsInWishlist(): query for all the Sessions in a User's wishlist<ul>
+<ul>getSessionsInWishlist(): query for all the Sessions in a User's wishlist</ul>
 
 <b>Task 3: Indexes and Queries</b>
 To fulfill Task #3, the autogeneration funcationality of index.yaml was tested and then two additional query endpoints were designed and implemeneted. The two additional queries and their endpoints are described below:
