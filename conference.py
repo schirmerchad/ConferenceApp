@@ -758,7 +758,7 @@ class ConferenceApi(remote.Service):
     @endpoints.method(message_types.VoidMessage, ConferenceForms,
             path='lessThanFiveSeats',
             http_method='POST', name='lessThanFiveSeats')
-    def getlowReg(self, request):
+    def lessThanFiveSeats(self, request):
         """Return conferences that have less than five slots available!"""
         confList = []
         confs = Conference.query()
@@ -778,7 +778,7 @@ class ConferenceApi(remote.Service):
     @endpoints.method(message_types.VoidMessage, ConferenceForms,
             path='confWithWorkshop',
             http_method='POST', name='confWithWorkshop')
-    def getNoSessions(self, request):
+    def confWithWorkshop(self, request):
         """Returns conferences that have workshops!"""
         confList = []
         confs = Conference.query()
