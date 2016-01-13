@@ -22,28 +22,22 @@ This app/API allows a logged in user to organize conferences and conference sess
 
 <h1>Design Description</h1>
 <b>Task 1: Add Sessions to a Conference</b>
-To fulfill task #1, a session class was created as well several methods to support Session actions, such as creating and removing sessions. The Session class is defined in models.py.
+To fulfill task #1, a session class was created as well several methods to support Session actions, such as creating and removing sessions. The Session class is defined in models.py. I did not go ahead and create a Speaker class. I chose to make the speaker attribute of eash session a ndb.StringProperty and structure my queries in that way. I would like to implement a Speaker class sometime in the future. I structured the Session class methods after the Conference methods and made sure that each Session is implemented as a child to a Conference. TypeOfSession uses the Enum property, like the t-shirt size in the Profile object, to store the value as an integer. 
 The supporting methods are defined in conferences.py. They are described briefly below:
 <ul>getConferenceSessions(websafeConferenceKey: Given a conference, return all sessions</ul>
 <ul>getConferenceSessionsByType(websafeConferenceKey, typeOfSession): Given a conference, return all sessions of a specified type (eg lecture, keynote, workshop)</ul>
 <ul>getSessionsBySpeaker(speaker): Given a speaker, return all sessions given by this particular speaker, across all conferences</ul>
-<ul>createSession(SessionForm, websafeConferenceKey): Creates a session and relates it to the parent Conference it is part of</ul>
+<ul>createSession(SessionForm, websafeConferenceKey): Creates a session and relates it to the parent Conference</ul>
 
-<b>Task 2</b>
-Requirement 3 defines the notion of a Session Wishlist for a user. The idea is that a user can put various Sessions on their wishlist to help them remember the sessions they are interested in.
-To support this functionality, the Profile (represents a user in the system) class required modification:
+<b>Task 2: Add Sessions to User's Wishlist</b>
+To fulfill Task #2, two methods were designed that allow a logged in user to add or delete Sessions from a wishlist and view that wishlist. A new property, sessionWishList had to be added to the Profile class to accomodate the new functionality.
+The method that adds or deletes a Session was modeled after the Conference method that registers or unregisters a user for a conference. It simply checks that the User and Session exists and appends or removes the Session from that User's wishlist. The two methods are briefly explained below:
+<ul>addSessionToWishlist(SessionKey): add/delete the Session from the User's list of Sessions</ul>
+<ul>getSessionsInWishlist(): query for all the Sessions in a User's wishlist<ul>
 
-add field sessionKeysWishList as a list (repeated=True) of Session keys the user has added to their wishlist.
-Further, two Endpoints methods were required to support operations:
-
-addSessionToWishlist(SessionKey)
-adds the session to the user's list of sessions they are interested in attending
-getSessionsInWishlist()
-query for all the sessions in a conference that the user is interested in
-Requirement 4 specified that two new queries (of the student's choice) be created and that a specific query "problem" be solved by the student.
-4.1 To satisfy the first part of the requirement, the following two queries and their associated Endpoint methods were created:
-
-getAllSpeakers()
+<b>Task 3: Indexes and Queries</b>
+To fulfill Task #3, the autogeneration funcationality of index.yaml was tested and then two additional query endpoints were designed and implemeneted. The two additional queries and their endpoints are described below:
+<ul>getAllSpeakers()
 Returns a list of all the Speakers for all Conferences and Sessions
 sessionsByTimeAndType(startTime,typeOfSession)
 Returns all Sessions that begin before the time specified by startTime (represented in 24 hour format as HH:MM) and constrained to MATCH the type of Session as specified by the typeOfSession parameter.
