@@ -22,7 +22,8 @@ This app/API allows a logged in user to organize conferences and conference sess
 
 <h1>Design Description</h1>
 <b>Task 1: Add Sessions to a Conference</b>
-To fulfill task #1, a session class was created as well several methods to support Session actions, such as creating and removing sessions. The Session class is defined in models.py. I did not go ahead and create a Speaker class. I chose to make the speaker attribute of eash session a ndb.StringProperty and structure my queries in that way. I would like to implement a Speaker class sometime in the future. I structured the Session class methods after the Conference methods and made sure that each Session is implemented as a child to a Conference. TypeOfSession uses the Enum property, like the t-shirt size in the Profile object, to store the value as an integer. 
+To fulfill task #1, a session class was created as well several methods to support Session actions, such as creating and removing sessions. The Session class is defined in models.py. I did not go ahead and create a Speaker class. I chose to make the speaker attribute of eash session a ndb.StringProperty and structure my queries in that way. I would like to implement a Speaker class sometime in the future. I structured the Session class methods after the Conference methods and made sure that each Session is implemented as a child to a Conference. TypeOfSession uses the Enum property, like the t-shirt size in the Profile object, to store the value as an integer.
+dateTime is modeled as a dateTime property to allow for chronological and date oriented ordering. The startTime is represented as a Time property to allow for similar sorting in natural chronological order. 
 The supporting methods are defined in conferences.py. They are described briefly below:
 <ul>getConferenceSessions(websafeConferenceKey: Given a conference, return all sessions</ul>
 <ul>getConferenceSessionsByType(websafeConferenceKey, typeOfSession): Given a conference, return all sessions of a specified type (eg lecture, keynote, workshop)</ul>
@@ -39,7 +40,7 @@ The method that adds or deletes a Session was modeled after the Conference metho
 <b>Task 3: Indexes and Queries</b>
 To fulfill Task #3, the autogeneration funcationality of index.yaml was tested and then two additional query endpoints were designed and implemeneted. The two additional queries and their endpoints are described below:
 <ul>lessThanFiveSeats(): Returns a list of all the Conferences that only have 4 or less seats remaining</ul>
-<ul>confWithWorkshop(): Returns all conferences that have at least one workshop</ul>
+<ul>sessionIsWorkshop(): Returns all sessions that are workshops</ul>
 
 The second part of Task #3 asks for a written answer to a specific query problem. The problem with the requested query is that, according to the Datastore Python Queries documentation "inequality filters are limited to at most one property." The proposed query has two inequality operators. To solve this issue one would need to query all sessions that are not Workshops and then iterate over the query results to filter out Sessions after 7pm. 
 
@@ -48,7 +49,7 @@ To fulfill Task #4, a method was written to determine if a Speaker is speaking a
 First, an endpoint method was implemented:
 <ul>getFeaturedSpeaker(): Returns the featured speaker and stores it in the Memcache</ul>
 Second, a handler for Memcache and task queue was created in main.py:
-<ul>AddFeaturedSpeakerHandler()</ul>
+<ul>SetFeaturedSpeakerHandler()</ul>
 
 <h1>Documentation</h1>
 <ul>https://cloud.google.com/appengine/docs/python/</ul>
