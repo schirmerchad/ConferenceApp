@@ -116,7 +116,7 @@ class Session(ndb.Model):
     duration      = ndb.IntegerProperty()
     typeOfSession = ndb.StringProperty()
     dateTime      = ndb.DateTimeProperty()
-    startTime     = ndb.TimeProperty()
+    startTime     = ndb.StringProperty()
 
 class SessionForm(messages.Message):
     """Session -- Session outbound form message"""

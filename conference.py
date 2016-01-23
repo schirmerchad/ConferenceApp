@@ -82,7 +82,6 @@ CONF_POST_REQUEST = endpoints.ResourceContainer(
 SESSION_GET_REQUEST = endpoints.ResourceContainer(
     message_types.VoidMessage,
     websafeConferenceKey=messages.StringField(1),
-    sessionKey=messages.StringField(2),
 )
 
 SESSION_POST_REQUEST = endpoints.ResourceContainer(
@@ -99,6 +98,11 @@ SESSION_TYPE_POST_REQUEST = endpoints.ResourceContainer(
 SESSION_SPEAKER_POST_REQUEST = endpoints.ResourceContainer(
     SessionMiniForm,
     speaker=messages.StringField(1),
+)
+
+WISHLIST_REQUEST = endpoints.ResourceContainer(
+    message_types.VoidMessage,
+    sessionKey=messages.StringField(1),
 )
 
 
@@ -715,7 +719,7 @@ class ConferenceApi(remote.Service):
         return BooleanMessage(data=retval)
 
 
-    @endpoints.method(SESSION_GET_REQUEST, BooleanMessage,
+    @endpoints.method(WISHLIST_REQUEST, BooleanMessage,
             path='session/{sessionKey}',
             http_method='POST', name='addSessionToWishlist')
     def addToWishlist(self, request):
@@ -723,7 +727,7 @@ class ConferenceApi(remote.Service):
         return self._manageWishlist(request)
 
         
-    @endpoints.method(SESSION_GET_REQUEST, BooleanMessage,
+    @endpoints.method(WISHLIST_REQUEST, BooleanMessage,
             path='session/{sessionKey}',
             http_method='DELETE', name='deleteSessionFromWishlist')
     def deleteFromWishlist(self, request):

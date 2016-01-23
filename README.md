@@ -23,7 +23,7 @@ This app/API allows a logged in user to organize conferences and conference sess
 <h1>Design Description</h1>
 <b>Task 1: Add Sessions to a Conference</b>
 To fulfill task #1, a session class was created as well several methods to support Session actions, such as creating and removing sessions. The Session class is defined in models.py. I did not go ahead and create a Speaker class. I chose to make the speaker attribute of eash session a ndb.StringProperty and structure my queries in that way. I would like to implement a Speaker class sometime in the future. I structured the Session class methods after the Conference methods and made sure that each Session is implemented as a child to a Conference. TypeOfSession uses the Enum property, like the t-shirt size in the Profile object, to store the value as an integer.
-dateTime is modeled as a dateTime property to allow for chronological and date oriented ordering. The startTime is represented as a Time property to allow for similar sorting in natural chronological order. 
+dateTime is modeled as a dateTime property to allow for chronological time and date oriented ordering. The startTime is represented as a String property so that it can be separated out using the strftime() method from the dateTime property when a Session object is created.
 The supporting methods are defined in conferences.py. They are described briefly below:
 <ul>getConferenceSessions(websafeConferenceKey: Given a conference, return all sessions</ul>
 <ul>getConferenceSessionsByType(websafeConferenceKey, typeOfSession): Given a conference, return all sessions of a specified type (eg lecture, keynote, workshop)</ul>
