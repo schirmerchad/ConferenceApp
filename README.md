@@ -1,5 +1,5 @@
-# Fullstack-project4
-Project #4 for the Udacity FSND. An app and API created with Python and Google Cloud Endpoints.
+# Conference Central
+An app and API created with Python and Google Cloud Endpoints.
 
 This project uses Python and Google App Engine to develop a conference management app and API. Data management is provided using the Google Cloud Datastore and OAuth2 is used as the authentication framework. Google Cloud Endpoints provides the tools, libraries, and capabilities for the API backend.
 
